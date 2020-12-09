@@ -26,39 +26,30 @@ class StreamDetailList extends Component {
         
     }
 
-    buildRowData= (set) => {
-        return <tr>
-            {this.state.streamerDetails.slice(set,set+5).map(stream => {
+    buildRowData= () => {
+        return this.state.streamerDetails.map(stream => {
                 return (
-                    <td>
-                        <Stream 
-                            streamName={stream.user_name}
-                            viewCount={stream.viewer_count}
-                            gameName={stream.game_name}
-                            picURL={stream.thumbnail_url}
-                        />
-                    </td>
+                    <Stream 
+                        streamName={stream.user_name}
+                        viewCount={stream.viewer_count}
+                        gameName={stream.game_name}
+                        picURL={stream.thumbnail_url}
+                    />
                 )
             
-            })}
-        </tr>
+            })
     }
 
     render() { 
         return (  
             <div className="App-header">
                 <table className="streamer-grid" id="streamer-grid">
-                  {this.buildRowData(0)}
-                  {this.buildRowData(5)}
-                  {this.buildRowData(10)}
-                  {this.buildRowData(15)}
-                  {this.buildRowData(20)}
-                  {this.buildRowData(25)}
-                  {this.buildRowData(30)}
-                  {this.buildRowData(35)}
-                  {this.buildRowData(40)}
-                  {this.buildRowData(45)}
-                  {this.buildRowData(50)}
+                    <tr className="streamer-details">
+                        <th>Streamer</th>
+                        <th>Last View Count</th>
+                        <th>Last Game Played</th>
+                    </tr>
+                    {this.buildRowData()}
 
                 </table>
             </div>

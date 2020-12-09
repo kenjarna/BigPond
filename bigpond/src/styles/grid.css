@@ -1,4 +1,9 @@
 
-.streamer-details {
-    border: solid white;
+tr.streamer-details {
+    border-bottom: 5px solid white;
+}
+
+table.streamer-grid {
+    border-collapse: collapse;
+    width: 50%;
 }
