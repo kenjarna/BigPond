@@ -2,6 +2,7 @@ import {React,Component} from 'react';
 
 import StreamerDetails from '../LogicComponents/getStreamerDetails';
 import Stream from './Stream';
+import Pagination from './Pagination';
 import "../styles/grid.css"
 
 class StreamDetailList extends Component {
@@ -10,7 +11,10 @@ class StreamDetailList extends Component {
         
         this.state = { 
             streamerDetails: [],
-            streamObj : new StreamerDetails()
+            streamObj : new StreamerDetails(),
+            nextKey: "",
+            pageNumbers: [],
+            currentPage: 0
         }
         this.getStreamDetails(); 
     }
@@ -20,7 +24,8 @@ class StreamDetailList extends Component {
         const data = await this.state.streamObj;
         if ('streamerData' in data){
             this.setState({
-                streamerDetails: data.streamerData.data
+                streamerDetails: data.streamerData.data,
+                nextKey: data.streamerData.pagination.cursor
             });
         }
         
@@ -40,6 +45,18 @@ class StreamDetailList extends Component {
             })
     }
 
+    updatePageNumbers = () => {
+        let lastPage = this.state.pageNumbers[-1];
+        const newLastPageValue = lastPage++;
+        this.setState({
+            pageNumbers: this.state.pageNumbers.append(newLastPageValue)
+        });
+    }
+
+    setPageNumber = (pageNumber) => {
+        this.setState({ currentPage: pageNumber  });
+    }
+
     render() { 
         return (  
             <div className="App-header">
@@ -50,8 +67,13 @@ class StreamDetailList extends Component {
                         <th>Last Game Played</th>
                     </tr>
                     {this.buildRowData()}
-
                 </table>
+                <Pagination 
+                    nextKey={this.state.nextKey}
+                    addPageNumber={this.updatePageNumbers}
+                    currentPage={this.state.currentPage}
+                    setPage={this.setPageNumber}
+                />
             </div>
         );
     }
